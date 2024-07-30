@@ -7,7 +7,6 @@
   <link rel="shortcut icon" href="TemplateData/favicon.ico">
   <link rel="stylesheet" href="TemplateData/style.css">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
 <div id="unity-container" class="unity-desktop">
@@ -25,7 +24,7 @@
     <div id="unity-build-title">CatsTitans</div>
   </div>
 </div>
-<div id="ton-connect"></div>
+
 
 <!-- Add an element for displaying debug messages -->
 <div id="debug-log" style="position: absolute; top: 10px; left: 10px; background: rgba(0, 0, 0, 0.7); color: white; padding: 10px; z-index: 1000; max-width: 300px; overflow: auto;"></div>
@@ -94,25 +93,6 @@
   // Telegram Web App initialization
   Telegram.WebApp.ready();
   logDebugMessage('Telegram WebApp ready. v1.4');
-
-  const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-    manifestUrl: 'https://gospelofmyheart.github.io/TriTONPitch/tonconnect.json',
-    buttonRootId: 'ton-connect'
-  });
-
-  tonConnectUI.uiOptions = {
-    twaReturnUrl: 'https://t.me/cats_titans_bot/app'
-  };
-
-  async function connectToWallet() {
-    const connectedWallet = await tonConnectUI.connectWallet();
-    logDebugMessage(JSON.stringify(connectedWallet));
-  }
-
-  // Call the function
-  connectToWallet().catch(error => {
-    console.error("Error connecting to wallet:", error);
-  });
 
   var script = document.createElement("script");
   script.src = loaderUrl;
