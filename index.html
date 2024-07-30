@@ -61,6 +61,15 @@
         }
         updateBannerVisibility();
       }
+      mergeInto(LibraryManager.library, {
+
+          Hello: function () {
+              window.alert("Hello, world!");
+          },
+      });
+      function HelloString (str) {
+          logDebugMessage(str);
+      }
       function logDebugMessage(message) {
           var logEntry = document.createElement('div');
           logEntry.textContent = message;
