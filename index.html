@@ -24,6 +24,10 @@
         <div id="unity-build-title">TestTelegramStars</div>
       </div>
     </div>
+
+    <!-- Add an element for displaying debug messages -->
+    <div id="debug-log" style="position: absolute; top: 10px; left: 10px; background: rgba(0, 0, 0, 0.7); color: white; padding: 10px; z-index: 1000; max-width: 300px; overflow: auto;"></div>
+
     <script>
 
       var container = document.querySelector("#unity-container");
@@ -32,6 +36,7 @@
       var progressBarFull = document.querySelector("#unity-progress-bar-full");
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var warningBanner = document.querySelector("#unity-warning");
+      var debugLog = document.querySelector("#debug-log");
 
       // Shows a temporary message banner/ribbon for a few seconds, or
       // a permanent error message on top of the canvas if type=='error'.
