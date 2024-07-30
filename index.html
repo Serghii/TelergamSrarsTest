@@ -58,11 +58,11 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/Custom.loader.js";
+      var loaderUrl = buildUrl + "/A.loader.js";
       var config = {
-        dataUrl: buildUrl + "/Custom.data",
-        frameworkUrl: buildUrl + "/Custom.framework.js",
-        codeUrl: buildUrl + "/Custom.wasm",
+        dataUrl: buildUrl + "/A.data",
+        frameworkUrl: buildUrl + "/A.framework.js",
+        codeUrl: buildUrl + "/A.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "TestTelegramStars",
@@ -137,14 +137,11 @@
                 }
             };
 
-        }).catch((message) => {
-            //logDebugMessage('Unity instance creation failed: ' + message);
-        });
-      };
+        
               }).catch((message) => {
                 alert(message);
               });
-            };
+      };
 
       
       document.body.appendChild(script);
