@@ -92,7 +92,7 @@
 
   // Telegram Web App initialization
   Telegram.WebApp.ready();
-  logDebugMessage('Telegram WebApp ready. v1.4');
+  logDebugMessage('Telegram WebApp ready. v1.42');
 
   var script = document.createElement("script");
   script.src = loaderUrl;
@@ -104,7 +104,7 @@
       fullscreenButton.onclick = () => {
         unityInstance.SetFullscreen(1);
       };
-
+/*
       // Define the function that will be called by Unity
       window.onUnityReady = function() {
         logDebugMessage('Unity instance initialized and scene loaded.');
@@ -131,7 +131,7 @@
       logDebugMessage('Unity instance creation failed: ' + message);
     });
   };
-
+*/
   document.body.appendChild(script);
 </script>
 </body>
