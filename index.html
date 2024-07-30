@@ -114,11 +114,39 @@
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
+
+// Define the function that will be called by Unity
+            window.onUnityReady = function() {
+                //logDebugMessage('Unity instance initialized and scene loaded.');
+
+                // Get user data from Telegram
+                const user = Telegram.WebApp.initDataUnsafe.user;
+                if (user) {
+                    //logDebugMessage('User data retrieved from Telegram: ' + JSON.stringify(user));
+                    const userData = {
+                        firstName: user.first_name,
+                        lastName: user.last_name,
+                        userName: user.username,
+                        userId: user.id.toString()
+                    };
+                   // logDebugMessage('Sending user data to Unity: ' + JSON.stringify(userData));
+                    // Send user data to Unity
+                    unityInstance.SendMessage('UserDataSystem', 'CollectUserData', JSON.stringify(userData));
+                } else {
+                    //logDebugMessage('No user data available from Telegram.');
+                }
+            };
+
+        }).catch((message) => {
+            //logDebugMessage('Unity instance creation failed: ' + message);
+        });
+      };
               }).catch((message) => {
                 alert(message);
               });
             };
 
+      
       document.body.appendChild(script);
 
     </script>
