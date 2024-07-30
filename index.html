@@ -7,7 +7,7 @@
   <link rel="shortcut icon" href="TemplateData/favicon.ico">
   <link rel="stylesheet" href="TemplateData/style.css">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+  //<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
   <div id="unity-container" class="unity-desktop">
@@ -72,9 +72,9 @@
       codeUrl: buildUrl + "/Build.wasm",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "DefaultCompany",
-      productName: "CatsTitans",
+      productName: "ProdName",
       productVersion: "1.0",
-      showBanner: unityShowBanner,
+      //showBanner: unityShowBanner,
     };
 
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
@@ -95,24 +95,24 @@
     Telegram.WebApp.ready();
     logDebugMessage('Telegram WebApp ready. v1.4');
 
-    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-        manifestUrl: 'https://gospelofmyheart.github.io/TriTONPitch/tonconnect.json',
-        buttonRootId: 'ton-connect'
-    });
+    //const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    //    manifestUrl: 'https://gospelofmyheart.github.io/TriTONPitch/tonconnect.json',
+    //    buttonRootId: 'ton-connect'
+    //});
 
-    tonConnectUI.uiOptions = {
-      twaReturnUrl: 'https://t.me/cats_titans_bot/app'
-  };
+    //tonConnectUI.uiOptions = {
+    //  twaReturnUrl: 'https://t.me/cats_titans_bot/app'
+  //};
 
-    async function connectToWallet() {
-        const connectedWallet = await tonConnectUI.connectWallet();
-        logDebugMessage(JSON.stringify(connectedWallet));
-    }
+    //async function connectToWallet() {
+    //    const connectedWallet = await tonConnectUI.connectWallet();
+    //    logDebugMessage(JSON.stringify(connectedWallet));
+    //}
 
     // Call the function
-    connectToWallet().catch(error => {
-        console.error("Error connecting to wallet:", error);
-    });
+    //connectToWallet().catch(error => {
+    //    console.error("Error connecting to wallet:", error);
+    //});
 
     var script = document.createElement("script");
     script.src = loaderUrl;
