@@ -30,9 +30,9 @@
 
     <script>        
         function Invoice(){
-            window.alert("TSInvoice~!");
-            Telegram.WebApp.sendData("invoise");
-            window.alert("TSInvoice~sendData!");
+            window.alert('Invoice~!');
+            Telegram.WebApp.sendData('invoice');
+            logDebugMessage('TSInvoice~sendData!');
         }
         
       var container = document.querySelector("#unity-container");
