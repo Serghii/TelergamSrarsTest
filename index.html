@@ -31,8 +31,8 @@
     <script>        
         function TSInvoice(){
             window.alert('Invoice~!');
-            Telegram.WebApp.sendData('invoice');
-            logDebugMessage('TSInvoice~sendData!');
+            Telegram.WebApp.openInvoice('https://t.me/$j4RuD3LOWEnbBgAA5o-hIxwq1GM');
+            logDebugMessage('TSInvoice~openInvoice!');
         }
         
       var container = document.querySelector("#unity-container");
@@ -121,7 +121,6 @@
       loadingBar.style.display = "block";
 
       // Telegram Web App initialization
-        Telegram.WebApp.initData();
       Telegram.WebApp.ready();
       logDebugMessage('Telegram WebApp ready. v1.5');
       
