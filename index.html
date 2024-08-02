@@ -30,14 +30,13 @@
 
     <script>        
         function Invoice(){
-            window.alert('Invoice~!');
-            Telegram.WebApp.openInvoice('https://t.me/$j4RuD3LOWEnbBgAA5o-hIxwq1GM');
-            logDebugMessage('TSInvoice~openInvoice!');
+            window.alert('Invoice wrong~!');
+            //Telegram.WebApp.openInvoice('https://t.me/$j4RuD3LOWEnbBgAA5o-hIxwq1GM');
         }
+        
         function InvoiceTest(){
-            window.alert('InvoiceTest');
-            Telegram.WebApp.openInvoice('https://t.me/$1jW0QTQKYUkDAAAATBWtryMQQtU');
-            logDebugMessage('TESTopenInvoice!');
+            window.alert('InvoiceTest wrong~!');
+            //Telegram.WebApp.openInvoice('https://t.me/$1jW0QTQKYUkDAAAATBWtryMQQtU');
         }
         
       var container = document.querySelector("#unity-container");
@@ -127,7 +126,7 @@
 
       // Telegram Web App initialization
       Telegram.WebApp.ready();
-      logDebugMessage('Telegram WebApp ready. v1.5');
+      logDebugMessage('Telegram WebApp ready. v1.51');
       
       var script = document.createElement("script");
       script.src = loaderUrl;
