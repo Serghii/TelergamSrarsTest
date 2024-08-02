@@ -6,38 +6,7 @@
     <title>Unity WebGL Player | TestTelegramStars</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-      <script>
-          function sessionStorageSet(key, value) {
-              try {
-                  window.sessionStorage.setItem('__telegram__' + key, JSON.stringify(value));
-                  return true;
-              } catch (e) {}
-              return false;
-          }
-
-          function sessionStorageGet(key) {
-              try {
-                  return JSON.parse(window.sessionStorage.getItem('__telegram__' + key));
-              } catch (e) {}
-              return null;
-          }
-
-          var appTgVersion = 7.0;
-
-          var initParams = sessionStorageGet('initParams');
-          if (initParams) {
-              if (!initParams.tgWebAppVersion) {
-                  initParams.tgWebAppVersion = appTgVersion;
-              }
-          } else {
-              initParams = {
-                  tgWebAppVersion: appTgVersion
-              };
-          }
-
-          sessionStorageSet('initParams', initParams);
-      </script>
-
+      
       <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
   <body>
