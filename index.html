@@ -126,7 +126,7 @@
 
       // Telegram Web App initialization
       Telegram.WebApp.ready();
-      logDebugMessage('Telegram WebApp ready. v1.51');
+      logDebugMessage('Telegram WebApp ready. v1.52');
       
       var script = document.createElement("script");
       script.src = loaderUrl;
@@ -155,7 +155,7 @@
                     };
                     logDebugMessage('Sending user data to Unity: ' + JSON.stringify(userData));
                     // Send user data to Unity
-                    unityInstance.SendMessage('UserDataSystem', 'CollectUserData', JSON.stringify(userData));
+                    unityInstance.SendMessage('TelegramConnect', 'CollectUserData', JSON.stringify(userData));
                 } else {
                     logDebugMessage('No user data available from Telegram.');
                 }
