@@ -25,10 +25,6 @@
       </div>
     </div>
 
-    <!-- Add an element for displaying debug messages -->
-    <div id="debug-log" style="position: absolute; top: 10px; left: 10px; background: rgba(0, 0, 0, 0.7); color: white; padding: 10px; z-index: 1000; max-width: 300px; overflow: auto;"></div>
-
-
     <script>
 
       var container = document.querySelector("#unity-container");
@@ -37,8 +33,6 @@
       var progressBarFull = document.querySelector("#unity-progress-bar-full");
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var warningBanner = document.querySelector("#unity-warning");
-      var debugLog = document.querySelector("#debug-log");
-
 
       // Shows a temporary message banner/ribbon for a few seconds, or
       // a permanent error message on top of the canvas if type=='error'.
@@ -64,19 +58,12 @@
         updateBannerVisibility();
       }
 
-      function logDebugMessage(message) {
-        var logEntry = document.createElement('div');
-        logEntry.textContent = message;
-        debugLog.appendChild(logEntry);
-        debugLog.scrollTop = debugLog.scrollHeight;
-      }
-
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/A.loader.js";
       var config = {
-        dataUrl: buildUrl + "/A.data",
-        frameworkUrl: buildUrl + "/A.framework.js",
-        codeUrl: buildUrl + "/A.wasm",
+        dataUrl: buildUrl + "/A.data.gz",
+        frameworkUrl: buildUrl + "/A.framework.js.gz",
+        codeUrl: buildUrl + "/A.wasm.gz",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "CatsTitans",
@@ -119,14 +106,19 @@
       Telegram.WebApp.ready();
       Telegram.WebApp.expand();
 
+      var myGameInstance = null;
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                myGameInstance = unityInstance;
+            
                 loadingBar.style.display = "none";
-				unityInstance.SetFullscreen(1);                
+                fullscreenButton.onclick = () => {
+                  unityInstance.SetFullscreen(1);
+                };
               }).catch((message) => {
                 alert(message);
               });
@@ -137,18 +129,19 @@
                 // Get user data from Telegram
                 const user = Telegram.WebApp.initDataUnsafe.user;
                 if (user) {
-                  logDebugMessage('User data retrieved from Telegram: ' + JSON.stringify(user));
 
                   const userData = {
                     firstName: user.first_name,
                     lastName: user.last_name,
                     userName: user.username,
-                    userId: user.id.toString()
+                    userId: user.id,
+                    languageCode: user.language_code
                   };
+                  
+                  console.log('User data:', userData);
+                  
                   // Send user data to Unity
-                  unityInstance.SendMessage('UserDataSystem', 'CollectUserData', JSON.stringify(userData));
-                } else {
-                  logDebugMessage('No user data available from Telegram.');
+                  myGameInstance.SendMessage('UserDataSystem', 'CollectUserData', JSON.stringify(userData));
                 }
               };
             };
