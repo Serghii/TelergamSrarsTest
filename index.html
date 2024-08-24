@@ -6,11 +6,12 @@
     <title>Unity WebGL Player | CatsTitans</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="TemplateData/socket.io.js"></script>
+    <script src="https://c0f4f41c-2f55-4863-921b-sdk-docs.github.io/cdn/metamask-sdk-unity.js"></script>
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=1080 height=1920 tabindex="-1"></canvas>
+      <canvas id="unity-canvas" width=1080 height=1920></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -24,9 +25,7 @@
         <div id="unity-build-title">CatsTitans</div>
       </div>
     </div>
-
     <script>
-
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
@@ -61,9 +60,9 @@
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/A.loader.js";
       var config = {
-        dataUrl: buildUrl + "/A.data.gz",
-        frameworkUrl: buildUrl + "/A.framework.js.gz",
-        codeUrl: buildUrl + "/A.wasm.gz",
+        dataUrl: buildUrl + "/A.data",
+        frameworkUrl: buildUrl + "/A.framework.js",
+        codeUrl: buildUrl + "/A.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "CatsTitans",
@@ -71,7 +70,7 @@
         showBanner: unityShowBanner,
       };
 
-      // By default, Unity keeps WebGL canvas render target size matched with
+      // By default Unity keeps WebGL canvas render target size matched with
       // the DOM size of the canvas element (scaled by window.devicePixelRatio)
       // Set this to false if you want to decouple this synchronization from
       // happening inside the engine, and you would instead like to size up
@@ -92,7 +91,7 @@
         // performance, uncomment the following line:
         // config.devicePixelRatio = 1;
 
-
+        unityShowBanner('WebGL builds are not supported on mobile devices.');
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
@@ -102,52 +101,22 @@
 
       loadingBar.style.display = "block";
 
-      // Telegram Web App initialization
-      Telegram.WebApp.ready();
-      Telegram.WebApp.expand();
-
-      var myGameInstance = null;
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
-              }).then((unityInstance) => {
-                myGameInstance = unityInstance;
-            
-                loadingBar.style.display = "none";
-                fullscreenButton.onclick = () => {
-                  unityInstance.SetFullscreen(1);
-                };
-              }).catch((message) => {
-                alert(message);
-              });
-            
-              // Define the function that will be called by Unity
-              window.onUnityReady = function() {
-                
-                // Get user data from Telegram
-                const user = Telegram.WebApp.initDataUnsafe.user;
-                if (user) {
-
-                  const userData = {
-                    firstName: user.first_name,
-                    lastName: user.last_name,
-                    userName: user.username,
-                    userId: user.id,
-                    languageCode: user.language_code
-                  };
-                  
-                  console.log('User data:', userData);
-                  
-                  // Send user data to Unity
-                  myGameInstance.SendMessage('UserDataSystem', 'CollectUserData', JSON.stringify(userData));
-                }
-              };
-            };
-
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+          window.unityInstance = unityInstance;
+        }).catch((message) => {
+          alert(message);
+        });
+      };
       document.body.appendChild(script);
-
     </script>
   </body>
 </html>
