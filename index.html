@@ -102,11 +102,11 @@
           debugLog.scrollTop = debugLog.scrollHeight;
       }
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/MM.loader.js";
+      var loaderUrl = buildUrl + "/AA.loader.js";
       var config = {
-        dataUrl: buildUrl + "/MM.data",
-        frameworkUrl: buildUrl + "/MM.framework.js",
-        codeUrl: buildUrl + "/MM.wasm",
+        dataUrl: buildUrl + "/AA.data",
+        frameworkUrl: buildUrl + "/AA.framework.js",
+        codeUrl: buildUrl + "/AA.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "TestTelegramStars",
@@ -158,6 +158,7 @@
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                unity = unityInstance;
                 loadingBar.style.display = "none";
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
@@ -209,7 +210,7 @@
             window.Telegram.WebApp.onEvent('invoiceClosed',async (obj)=>{
                 logDebugMessage('#invoiceClosed');                
                 logDebugMessage(JSON.stringify(obj));
-                window.unityInstance.SendMessage("TelegramConnect", "InvoiceClosed", JSON.stringify(obj));
+                unity.SendMessage("TelegramConnect", "InvoiceClosed", JSON.stringify(obj));
             })
         }
     </script>
