@@ -6,7 +6,38 @@
     <title>Unity WebGL Player | TestTelegramStars</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-      
+      <script>
+          function sessionStorageSet(key, value) {
+              try {
+                  window.sessionStorage.setItem('__telegram__' + key, JSON.stringify(value));
+                  return true;
+              } catch (e) {}
+              return false;
+          }
+
+          function sessionStorageGet(key) {
+              try {
+                  return JSON.parse(window.sessionStorage.getItem('__telegram__' + key));
+              } catch (e) {}
+              return null;
+          }
+
+          var appTgVersion = 7.0;
+
+          var initParams = sessionStorageGet('initParams');
+          if (initParams) {
+              if (!initParams.tgWebAppVersion) {
+                  initParams.tgWebAppVersion = appTgVersion;
+              }
+          } else {
+              initParams = {
+                  tgWebAppVersion: appTgVersion
+              };
+          }
+
+          sessionStorageSet('initParams', initParams);
+      </script>
+
       <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
   <body>
@@ -30,15 +61,7 @@
     <div id="debug-log" style="position: absolute; top: 10px; left: 10px; background: rgba(0, 0, 0, 0.7); color: white; padding: 10px; z-index: 1000; max-width: 300px; overflow: auto;"></div>
 
     <script>        
-        function Invoice(){
-            window.alert('Invoice wrong~!');
-            //Telegram.WebApp.openInvoice('https://t.me/$j4RuD3LOWEnbBgAA5o-hIxwq1GM');
-        }
-        
-        function InvoiceTest(){
-            window.alert('InvoiceTest wrong~!');
-            //Telegram.WebApp.openInvoice('https://t.me/$1jW0QTQKYUkDAAAATBWtryMQQtU');
-        }
+       
         
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
@@ -79,11 +102,11 @@
           debugLog.scrollTop = debugLog.scrollHeight;
       }
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/A.loader.js";
+      var loaderUrl = buildUrl + "/MM.loader.js";
       var config = {
-        dataUrl: buildUrl + "/A.data",
-        frameworkUrl: buildUrl + "/A.framework.js",
-        codeUrl: buildUrl + "/A.wasm",
+        dataUrl: buildUrl + "/MM.data",
+        frameworkUrl: buildUrl + "/MM.framework.js",
+        codeUrl: buildUrl + "/MM.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "TestTelegramStars",
@@ -143,7 +166,16 @@
 // Define the function that will be called by Unity
             window.onUnityReady = function() {
                 logDebugMessage('Unity instance initialized and scene loaded.');
+                unityInstance.SetFullscreen(1);
 
+                if(window.Telegram.WebApp){
+                    window.Telegram.WebApp.onEvent('invoiceClosed',async (obj)=>{
+                        logDebugMessage('#QinvoiceClosed')                        
+                        logDebugMessage(obj.data)                        
+                            unityInstance.SendMessage("TelegramConnect", "InvoiceClosed", JSON.stringify(obj.data));
+                    })
+                }
+                
                 // Get user data from Telegram
                 const user = Telegram.WebApp.initDataUnsafe.user;
                 if (user) {
@@ -171,6 +203,15 @@
       
       document.body.appendChild(script);
 
+    </script>
+    <script>
+        if(window.Telegram.WebApp){
+            window.Telegram.WebApp.onEvent('invoiceClosed',async (obj)=>{
+                logDebugMessage('#invoiceClosed');                
+                logDebugMessage(obj);                
+                    unityInstance.SendMessage("TelegramConnect", "InvoiceClosed", JSON.stringify(obj));
+            })
+        }
     </script>
   </body>
 </html>
