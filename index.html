@@ -102,11 +102,11 @@
           debugLog.scrollTop = debugLog.scrollHeight;
       }
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/AA.loader.js";
+      var loaderUrl = buildUrl + "/MM.loader.js";
       var config = {
-        dataUrl: buildUrl + "/AA.data",
-        frameworkUrl: buildUrl + "/AA.framework.js",
-        codeUrl: buildUrl + "/AA.wasm",
+        dataUrl: buildUrl + "/MM.data",
+        frameworkUrl: buildUrl + "/MM.framework.js",
+        codeUrl: buildUrl + "/MM.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "TestTelegramStars",
@@ -150,7 +150,7 @@
 
       // Telegram Web App initialization
       Telegram.WebApp.ready();
-      logDebugMessage('Telegram WebApp ready. v1.52');
+      logDebugMessage('Telegram WebApp ready. v1.54');
       
       var script = document.createElement("script");
       script.src = loaderUrl;
