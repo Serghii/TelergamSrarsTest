@@ -102,11 +102,11 @@
           debugLog.scrollTop = debugLog.scrollHeight;
       }
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/MM.loader.js";
+      var loaderUrl = buildUrl + "/AA.loader.js";
       var config = {
-        dataUrl: buildUrl + "/MM.data",
-        frameworkUrl: buildUrl + "/MM.framework.js",
-        codeUrl: buildUrl + "/MM.wasm",
+        dataUrl: buildUrl + "/AA.data",
+        frameworkUrl: buildUrl + "/AA.framework.js",
+        codeUrl: buildUrl + "/AA.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "TestTelegramStars",
@@ -171,7 +171,7 @@
                 if(window.Telegram.WebApp){
                     window.Telegram.WebApp.onEvent('invoiceClosed',async (obj)=>{
                         logDebugMessage('#QinvoiceClosed')                        
-                        logDebugMessage(obj.data)                        
+                        logDebugMessage(JSON.stringify(obj.data))                        
                             unityInstance.SendMessage("TelegramConnect", "InvoiceClosed", JSON.stringify(obj.data));
                     })
                 }
@@ -208,7 +208,7 @@
         if(window.Telegram.WebApp){
             window.Telegram.WebApp.onEvent('invoiceClosed',async (obj)=>{
                 logDebugMessage('#invoiceClosed');                
-                logDebugMessage(obj);                
+                logDebugMessage(JSON.stringify(obj));                
                     unityInstance.SendMessage("TelegramConnect", "InvoiceClosed", JSON.stringify(obj));
             })
         }
